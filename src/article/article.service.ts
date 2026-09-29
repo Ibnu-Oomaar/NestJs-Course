@@ -6,7 +6,7 @@ import { UserEntity } from "@app/user/user.entity";
 import { DeleteResult, Repository } from "typeorm";
 import { ArticleResponseInterface } from "./types/articleResponse.inerface";
 import slugify from 'slugify'
-import { title } from "process";
+import { ArticlesResponseInterface } from "@app/types/articleResponse.Interface";
 
 
 @Injectable()
@@ -26,6 +26,16 @@ export class ArticleService{
 
 
         return await this.articleReponsitory.save(article);
+    }
+
+    async findAll(currentUserId:number , query:any):Promise<ArticlesResponseInterface>{
+        const queryBilder = this.articleReponsitory.createQueryBuilder('articles');
+        const articles = await queryBilder.getMany();
+
+        return{
+            articles,
+            articlesCount:articles.length,
+        }
     }
 
     async findBySlug(slug:string):Promise<ArticleEntity>{
