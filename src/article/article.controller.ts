@@ -6,7 +6,7 @@ import { CreateArticleDto } from './dto/createArticle.dto';
 import { UserEntity } from '@app/user/user.entity';
 import { ArticleResponseInterface } from './types/articleResponse.inerface';
 import { UpdateArticleDto } from './dto/updateArticle.dto';
-import { ArticlesResponseInterface } from '@app/types/articleResponse.Interface';
+import { ArticlesResponseInterface } from '@app/types/articleResponse.interface';
 
 @Controller('articles')
 export class ArticleController {

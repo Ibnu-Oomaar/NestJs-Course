@@ -6,7 +6,8 @@ import { UserEntity } from "@app/user/user.entity";
 import { DeleteResult, Repository } from "typeorm";
 import { ArticleResponseInterface } from "./types/articleResponse.inerface";
 import slugify from 'slugify'
-import { ArticlesResponseInterface } from "@app/types/articleResponse.Interface";
+import { ArticlesResponseInterface } from "../types/articleResponse.interface";
+
 
 
 @Injectable()
@@ -29,12 +30,26 @@ export class ArticleService{
     }
 
     async findAll(currentUserId:number , query:any):Promise<ArticlesResponseInterface>{
-        const queryBilder = this.articleReponsitory.createQueryBuilder('articles');
+        const queryBilder = this.articleReponsitory
+        .createQueryBuilder('articles')
+        .leftJoinAndSelect('articles.author','author');
+
+        queryBilder.orderBy('articles.createdAt',"DESC")
+
         const articles = await queryBilder.getMany();
+        const articlesCount = await queryBilder.getCount();
 
         return{
             articles,
-            articlesCount:articles.length,
+            articlesCount
+        };
+
+        if(query.limit){
+            queryBilder.limit(query.limit);
+        }
+
+        if(query.offset){
+            queryBilder.offset(query.offset);  
         }
     }
 
