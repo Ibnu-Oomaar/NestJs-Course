@@ -1,6 +1,6 @@
   import { ArticleEntity } from "@app/article/article.entity";
 import * as argon2 from "argon2";
-  import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+  import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
   @Entity({name:'users'})
   export class UserEntity{
@@ -29,5 +29,9 @@ import * as argon2 from "argon2";
 
       @OneToMany(()=> ArticleEntity, (article) => article.author)
       articles:ArticleEntity[];
+
+      @ManyToMany(()=> ArticleEntity)
+      @JoinTable()
+      favorites:ArticleEntity[];
 
   }
