@@ -77,7 +77,7 @@ export class ArticleService {
           username: query.favorited,
         },
         relations:{
-          favorites:true
+          favorites:true,
         }
       });
     }
@@ -109,8 +109,9 @@ export class ArticleService {
     
     const articlesCount = await queryBilder.getCount();
 
+
     return {
-      articles,
+      articles : articleWithFavorited,
       articlesCount,
     };
 

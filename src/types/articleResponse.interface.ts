@@ -1,6 +1,10 @@
 import { ArticleEntity } from "@app/article/article.entity";
 
+export type ArticleResponseArticle = Omit<ArticleEntity, "updateTimestamp"> & {
+    favorited: boolean;
+};
+
 export interface ArticlesResponseInterface{
-    articles?:ArticleEntity [];
+    articles?: ArticleResponseArticle[];
     articlesCount:number;
 }
